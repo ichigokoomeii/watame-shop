@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小莓奶糖批發服設</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/cwtexyen.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cherry-bg': '#FFF5F5',      /* 蕾絲櫻粉底色 */
+                        'cherry-card': '#FFFFFF',    /* 純白襯底 */
+                        'cherry-border': '#F3D1D6',  /* 玫瑰豆沙框 */
+                        'cherry-accent': '#FF94A2',  /* 暖櫻粉按鈕 */
+                        'cherry-accent-dark': '#E27483',
+                        'cherry-text': '#7A4F55',    /* 濃可可莓果文字 */
+                        'deco-pink': '#FFE3E7',    
+                        'deco-green': '#E8F5E9',
+                    },
+                    fontFamily: { 
+                        sans: ['"cwTeXYen"', '"Microsoft JhengHei"', 'sans-serif'] 
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 🌸 花朵旋轉動畫 */
+        @keyframes flower-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-flower { animation: flower-spin 4s infinite linear; }
+        
+        body {
+            background-color: #FFF5F5; /* 移除原本的 radial-gradient 點點背景 */
+            font-family: 'cwTeXYen', 'Microsoft JhengHei', sans-serif;
+            color: #7A4F55;
+            overflow-x: hidden;
+        }
+        
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .paper-card { 
+            background-color: #FFFFFF;
+            border: 3px solid #F3D1D6;
+            border-radius: 32px;
+            box-shadow: 0px 16px 32px rgba(243, 209, 214, 0.5);
+            position: relative;
+        }
+        
+        /* 蕾絲風格緞帶裝飾 */
+        .lace-ribbon {
+            background-color: #FF94A2;
+            height: 12px;
+            width: 140px;
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 6px;
+            z-index: 10;
+        }
+
+        input, select, textarea { 
+            border-radius: 16px;
+            font-family: 'cwTeXYen', sans-serif; 
+            border: 2px solid #F3D1D6;
+            background-color: #FFF;
+        }
+        input:focus, select:focus, textarea:focus { 
+            border-color: #FF94A2; 
+            outline: none; 
+            background-color: #FFFBFB;
+            box-shadow: 0 0 0 3px rgba(255, 148, 162, 0.2);
+        }
+        
+        .chk-input:checked + div { 
+            border-color: #FF94A2;     
+            background-color: #FFF0F2; 
+        }
+        
+        .btn-pink { 
+            background-color: #FF94A2; border: 2px solid #FF94A2; color: white;
+            border-radius: 999px;
+            transition: all 0.2s;
+        }
+        .btn-pink:hover { 
+            background-color: #E27483; border-color: #E27483;
+            transform: translateY(-1px);
+        }
+        .btn-pink:active { transform: translateY(0); }
+        .btn-pink:disabled {
+            background-color: #F5D5D9; border-color: #F5D5D9; color: #B3868C;
+            cursor: not-allowed; transform: none;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+        .whitespace-pre-wrap { white-space: pre-wrap; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-4 py-12">
+
+    <div class="fixed top-10 left-10 text-4xl text-cherry-border opacity-40 rotate-[-15deg]"><i class="fa-solid fa-ribbon"></i></div>
+    <div class="fixed bottom-20 right-10 text-5xl text-deco-pink opacity-60 rotate-[20deg]"><i class="fa-solid fa-seedling"></i></div>
+    <div class="fixed top-1/4 right-12 text-3xl text-cherry-accent opacity-30 rotate-[45deg]"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+    <div class="fixed bottom-10 left-20 text-4xl text-cherry-border opacity-50 rotate-[-10deg]"><i class="fa-solid fa-heart"></i></div>
+
+    <div class="max-w-[540px] w-full fade-in relative z-10"> 
+        
+        <div class="text-center mb-8 relative">
+            <div class="inline-block relative">
+                <i class="fa-solid fa-wand-magic-sparkles text-cherry-accent text-2xl absolute -top-4 -right-6 animate-pulse"></i>
+                <h1 class="text-5xl font-bold text-cherry-text tracking-widest drop-shadow-sm" style="font-family: 'BiauKai', 'STYuanti-TC-Regular', 'Comic Sans MS',                                       'cwTeXYen', 'Microsoft JhengHei', sans-serif;">
+                    小莓奶糖
+                </h1>
+                <div class="h-3 bg-deco-pink w-[110%] absolute bottom-1 -left-2 -z-10 rounded-full"></div>
+            </div>
+            <div class="mt-4 flex justify-center gap-2 items-center">
+                <span class="w-2 h-2 rounded-full bg-cherry-border"></span>
+                <p class="text-lg font-bold text-cherry-text/80 tracking-widest">🌸 批發服設</p>
+                <span class="w-2 h-2 rounded-full bg-cherry-border"></span>
+            </div>
+        </div>
+
+        <div class="paper-card p-6 md:p-10">
+            <div class="lace-ribbon"></div>
+
+            <div id="loadingOverlay" class="absolute inset-0 bg-white/95 z-50 rounded-[32px] flex flex-col items-center justify-center backdrop-blur-sm">
+                <i class="fa-solid fa-snowflake animate-flower text-4xl text-cherry-accent mb-4"></i>
+                <span class="text-cherry-text font-bold text-lg tracking-widest">🌸 正在翻開粉色手帳...</span>
+            </div>
+
+            <form id="orderForm" class="space-y-6">
+                <input type="text" name="honeypot" style="display:none" tabindex="-1" autocomplete="off">
+
+                <div id="step1Container" class="space-y-6">
+                    <div class="group relative">
+                        <label class="block text-base font-bold text-cherry-text mb-2 pl-2 flex items-center gap-2">
+                            <i class="fa-solid fa-star text-cherry-accent"></i> 選擇販售主題
+                        </label>
+                        <div class="relative">
+                            <select id="themeSelect" class="w-full px-5 py-3.5 appearance-none font-bold text-cherry-text cursor-pointer text-base shadow-sm">
+                                <option value="" disabled selected>請點此選擇販售主題...</option>
+                            </select>
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-cherry-accent">
+                                <i class="fa-solid fa-chevron-down text-base"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="infoSection" class="hidden space-y-6 fade-in">
+                        <details class="bg-[#FFFDFD] border-2 border-cherry-border rounded-[20px] overflow-hidden group" open>
+                            <summary class="cursor-pointer p-4 px-5 font-bold text-cherry-text flex justify-between items-center hover:bg-cherry-bg/30 select-none">
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-bullhorn text-cherry-accent"></i> 購買須知與內容物</span>
+                                <div class="text-cherry-accent group-open:rotate-180 transition-transform bg-white w-7 h-7 rounded-full flex items-center justify-center border border-cherry-border">
+                                    <i class="fa-solid fa-angle-down text-xs"></i>
+                                </div>
+                            </summary>
+                            <div class="p-5 border-t-2 border-dashed border-cherry-border text-sm text-cherry-text leading-relaxed whitespace-pre-wrap bg-[#FFFDFD]" id="ruleText"></div>
+                        </details>
+
+                        <div id="productSection" class="space-y-3">
+                            <label class="block text-base font-bold text-cherry-text mb-2 pl-4 flex items-center gap-2">
+                                <i class="fa-solid fa-bag-shopping text-cherry-accent"></i> 選擇服設 (可多選)
+                            </label>
+                            <div id="productList" class="grid grid-cols-2 gap-3 w-full h-auto pb-2"></div>
+                        </div>
+
+                        <div id="buyerSection" class="space-y-4 pt-2">
+                            <div>
+                                <label class="block text-sm font-bold text-cherry-text mb-1.5 pl-2">暱稱 *</label>
+                                <input type="text" id="buyerName" name="name" placeholder="請問怎麼稱呼您呢？" class="w-full px-4 py-3 text-cherry-text placeholder-cherry-border/70 text-sm transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-cherry-text mb-1.5 pl-2">電子信箱 *</label>
+                                <input type="email" id="buyerEmail" name="email" placeholder="接收服設檔案用" class="w-full px-4 py-3 text-cherry-text placeholder-cherry-border/70 text-sm transition-colors">
+                            </div>
+                        </div>
+
+                        <div class="bg-cherry-bg/40 border-2 border-cherry-border p-4 rounded-[20px] flex justify-between items-center">
+                            <span class="text-sm font-bold text-cherry-text/80">目前小計金額：</span>
+                            <span class="text-2xl font-bold font-mono text-cherry-accent-dark">NT$<span id="step1Total">0</span></span>
+                        </div>
+
+                        <div class="pt-2">
+                            <button type="button" id="nextStepBtn" class="w-full btn-pink font-bold py-3.5 text-base flex items-center justify-center gap-2 shadow-sm">
+                                <span>填寫匯款資料 (下一步)</span> <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step2Container" class="hidden space-y-6 fade-in">
+                    <button type="button" id="prevStepBtn" class="text-sm font-bold text-cherry-accent hover:text-cherry-accent-dark flex items-center gap-1 transition-colors">
+                        <i class="fa-solid fa-arrow-left text-xs"></i> 返回重新挑選商品
+                    </button>
+
+                    <div class="bg-[#FFFDFD] border-2 border-cherry-border rounded-[20px] p-5 space-y-3">
+                        <h3 class="font-bold text-cherry-text flex items-center gap-2 border-b border-cherry-border/50 pb-2">
+                            <i class="fa-solid fa-file-invoice text-cherry-accent"></i> 您的訂購明細核對
+                        </h3>
+                        <div id="summaryReview" class="text-sm text-cherry-text/90 space-y-1.5 max-h-[120px] overflow-y-auto pr-1"></div>
+                        
+                        <div class="flex items-center justify-between pt-3 border-t border-dashed border-cherry-border/50">
+                            <span class="text-sm font-bold text-cherry-text/80">應付總金額 Total</span>
+                            <div class="text-2xl font-bold font-mono text-cherry-accent-dark flex items-center">
+                                <span>NT$</span>
+                                <input type="text" name="amount" id="totalAmount" value="0" readonly class="bg-transparent w-24 text-right outline-none cursor-default font-bold border-none p-0 focus:bg-transparent">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-cherry-bg/30 border-2 border-dashed border-cherry-border rounded-[20px] p-5 space-y-3">
+                        <h3 class="font-bold text-cherry-text text-sm flex items-center gap-2 border-b border-cherry-border/30 pb-2">
+                            <i class="fa-solid fa-vault text-cherry-accent"></i> 匯款帳號資料
+                        </h3>
+                        <div id="bankContainer" class="space-y-3"></div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-bold text-cherry-text mb-1.5 pl-2">轉帳帳號後五碼 / 備註說明 *</label>
+                            <input type="text" id="userAccount" name="account" placeholder="請填寫匯款後五碼或無卡備註..." class="w-full px-4 py-3 text-center tracking-wider text-cherry-text placeholder-cherry-border/70 text-base font-bold transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-cherry-text mb-1.5 pl-2">上傳轉帳明細截圖 *</label>
+                            <div class="relative border-2 border-dashed border-cherry-border rounded-[16px] p-4 text-center bg-white hover:bg-cherry-bg/10 transition-colors cursor-pointer group">
+                                <input type="file" id="screenshotFile" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                                <div id="uploadPlaceholder" class="space-y-1">
+                                    <i class="fa-solid fa-image text-2xl text-cherry-border group-hover:text-cherry-accent transition-colors"></i>
+                                    <p class="text-xs font-bold text-cherry-text/70" id="fileNameDisplay">點擊此處或拖曳圖片檔案上傳</p>
+                                    <p class="text-[11px] text-cherry-text/40">支援 JPG, PNG 格式圖片</p>
+                                </div>
+                                <input type="hidden" id="screenshotBase64" name="screenshot_base64">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <button type="submit" id="submitBtn" class="w-full btn-pink font-bold py-4 text-lg flex items-center justify-center gap-2 shadow-sm">
+                            <span>確認送出並投遞訂單</span> <i class="fa-regular fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="successMsg" class="hidden text-center mt-4 fade-in py-8 relative">
+                <div class="w-20 h-20 mx-auto mb-5 bg-[#FFF0F2] border-4 border-white shadow-[0_0_0_4px_#FF94A2] rounded-full flex items-center justify-center">
+                    <i class="fa-solid fa-heart text-3xl text-cherry-accent"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-cherry-text mb-2">粉色手帳投遞成功！</h3>
+                <p class="text-sm text-cherry-text/80 mb-6 leading-relaxed">
+                    小莓已經將您的訂單收進手帳本囉！<br>
+                    確認款項無誤後，檔案將盡快寄送至您的電子信箱。
+                </p>
+                <button onclick="location.reload()" class="px-8 py-2.5 bg-white border-2 border-cherry-accent text-cherry-accent rounded-full text-sm font-bold hover:bg-cherry-accent hover:text-white transition-colors">
+                    再填一張表單
+                </button>
+            </div>
+        </div>
+
+        <div class="text-center mt-10 flex flex-col items-center gap-2">
+            <div class="text-xl text-cherry-border space-x-3">
+                <i class="fa-solid fa-snowflake animate-flower inline-block text-sm"></i>
+                <i class="fa-solid fa-leaf"></i>
+                <i class="fa-solid fa-snowflake animate-flower inline-block text-sm"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const TEST_MOCK_DATA = {
+            "🌸 2026 春季草莓午茶派對": {
+                "contents": "1. 高解析度 PNG 透明底人物立繪\n2. 附帶三種差分表情物件（開心/驚訝/甜點咬咬）\n3. 商業延伸授權使用書",
+                "rules": "1. 本次委託皆為批發買斷制，售出不退。\n2. 禁止任何惡意二次改作或宣稱自製。\n3. 請於下單後 24 小時內完成匯款，否則名額會被小精靈取消唷！",
+                "bankInfo": "822, 1234567890123456",
+                "products": [
+                    { "name": "A款 ✶ 草莓慕斯連身裙", "price": 1200, "img": "https://placehold.co/100x100/FFE3E7/7A4F55?text=Strawberry" },
+                    { "name": "B款 ✶ 抹茶歐蕾圍裙套裝 | 限量熱賣", "price": 1500, "img": "https://placehold.co/100x100/E8F5E9/7A4F55?text=Matcha" },
+                    { "name": "C款 ✶ 伯爵紅茶優雅蓬蓬裙", "price": 1000, "img": "https://placehold.co/100x100/FFF5F5/7A4F55?text=BlackTea" }
+                ]
+            },
+            "🍬 軟綿綿糖果屋販售會": {
+                "contents": "1. 精緻 Q 版像素風全身服設\n2. 附贈專屬動態小動效 gif 檔",
+                "rules": "1. 僅供個人收藏、OC 使用，如需商業轉售請另行來信。\n2. 匯款完請務必上傳清晰明細圖供對帳。",
+                "bankInfo": "700, 00012345678901",
+                "products": [
+                    { "name": "糖果屋A ✶ 薄荷棉花糖", "price": 800, "img": "https://placehold.co/100x100/E0F7FA/7A4F55?text=Mint" },
+                    { "name": "糖果屋B ✶ 蜜桃泡泡糖", "price": 850, "img": "https://placehold.co/100x100/FFE3E7/7A4F55?text=Peach" }
+                ]
+            }
+        };
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/改這邊達成真正的API'; 
+
+        let globalData = {}; 
+
+        const themeSelect = document.getElementById('themeSelect');
+        const infoSection = document.getElementById('infoSection');
+        const productList = document.getElementById('productList');
+        const ruleText = document.getElementById('ruleText');
+        const bankContainer = document.getElementById('bankContainer');
+        const totalInput = document.getElementById('totalAmount');
+        const step1Total = document.getElementById('step1Total');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+
+        const step1Container = document.getElementById('step1Container');
+        const step2Container = document.getElementById('step2Container');
+        const summaryReview = document.getElementById('summaryReview');
+        
+        const nextStepBtn = document.getElementById('nextStepBtn');
+        const prevStepBtn = document.getElementById('prevStepBtn');
+        const screenshotFile = document.getElementById('screenshotFile');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+        const screenshotBase64 = document.getElementById('screenshotBase64');
+
+        window.addEventListener('load', () => {
+            initFormWithData(TEST_MOCK_DATA);
+        });
+
+        function initFormWithData(data) {
+            loadingOverlay.style.display = 'none';
+            globalData = data;
+            themeSelect.innerHTML = '<option value="" disabled selected>請點此選擇販售主題...</option>';
+            
+            Object.keys(data).forEach(theme => {
+                let option = document.createElement('option');
+                option.value = theme;
+                option.text = theme;
+                themeSelect.appendChild(option);
+            });
+        }
+
+        themeSelect.addEventListener('change', function() {
+            const theme = this.value;
+            const data = globalData[theme];
+            if(!data) return;
+
+            infoSection.classList.remove('hidden');
+
+            let displayRules = "";
+            if(data.contents) displayRules += `【 內 容 物 明 細 】\n${data.contents}\n\n`;
+            if(data.rules) displayRules += `【 購 買 須 知 規 範 】\n${data.rules}`;
+            ruleText.innerText = displayRules || "本商品主題無說明與特殊規範。";
+
+            const rawBank = data.bankInfo || "";
+            let bankHTML = "";
+            if (rawBank.includes(",") || rawBank.includes("，")) {
+                let parts = rawBank.split(/,|，/); 
+                let bankCode = parts[0].trim();
+                let bankAcct = parts[1] ? parts[1].trim() : "";
+                
+                bankHTML = `
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm">
+                        <span class="text-cherry-text/70 font-bold mb-1 sm:mb-0"><i class="fa-solid fa-building-columns text-xs mr-1"></i> 銀行代碼</span>
+                        <span class="font-mono font-bold text-cherry-text bg-cherry-bg/60 border border-cherry-border px-3 py-0.5 rounded-lg self-start sm:self-auto">${bankCode}</span>
+                    </div>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm mt-3">
+                        <span class="text-cherry-text/70 font-bold mb-1 sm:mb-0"><i class="fa-solid fa-money-check-dollar text-xs mr-1"></i> 銀行帳號</span>
+                        <div class="flex items-center gap-2 self-start sm:self-auto">
+                            <span class="font-mono font-bold text-cherry-text tracking-wider text-base">${bankAcct}</span>
+                            <button type="button" onclick="copyText('${bankAcct}', this)" class="w-6 h-6 flex items-center justify-center bg-cherry-border text-white rounded-full hover:bg-cherry-accent transition-colors"><i class="fa-regular fa-copy text-[10px]"></i></button>
+                        </div>
+                    </div>`;
+            } else {
+                bankHTML = `<div class="text-sm font-mono text-cherry-text whitespace-pre-wrap">${rawBank || "無匯款資訊"}</div>`;
+            }
+            bankContainer.innerHTML = bankHTML;
+
+            productList.innerHTML = ''; 
+            data.products.forEach((item) => {
+                const label = document.createElement('label');
+                label.className = "block cursor-pointer relative fade-in h-full";
+                
+                let imgSrc = item.img;
+                if(imgSrc && imgSrc.includes("drive.google.com") && imgSrc.includes("/view")) {
+                    const idMatch = imgSrc.match(/\/d\/(.+?)\//);
+                    if(idMatch) imgSrc = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+                }
+
+                let displayName = item.name; 
+                let submitValue = item.name; 
+                let badge = "";
+                if(item.name.includes('|')){
+                    const parts = item.name.split('|');
+                    displayName = parts[0].trim();
+                    badge = parts[1].trim();
+                }
+
+                label.innerHTML = `
+                    <input type="checkbox" name="product_check" value="${submitValue}" data-price="${item.price}" class="peer absolute opacity-0 w-0 h-0">
+                    
+                    <div class="h-full border-2 border-cherry-border rounded-[20px] overflow-hidden transition-all duration-300 bg-white hover:border-cherry-accent hover:shadow-md peer-checked:border-cherry-accent peer-checked:ring-4 peer-checked:ring-cherry-accent/20 flex flex-col relative group">
+                        
+                        <div class="relative w-full aspect-square bg-cherry-bg/30 border-b-2 border-cherry-border peer-checked:border-cherry-accent transition-colors overflow-hidden">
+                            <img src="${imgSrc}" onerror="this.onerror=null; this.src='https://placehold.co/200x200/F3D1D6/white?text=No+Img';" alt="${displayName}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            
+                            <div class="absolute top-2 right-2 w-7 h-7 rounded-full border-2 border-white shadow-sm flex items-center justify-center text-white bg-cherry-accent opacity-0 transform scale-50 transition-all duration-300 peer-checked:opacity-100 peer-checked:scale-100 z-10">
+                                <i class="fa-solid fa-check text-sm"></i>
+                            </div>
+
+                            ${badge ? `<div class="absolute bottom-2 left-2 bg-white/95 backdrop-blur-sm text-cherry-accent-dark text-[11px] font-bold px-2 py-1 rounded-lg border border-cherry-border shadow-sm">${badge}</div>` : ''}
+                        </div>
+
+                        <div class="p-3 flex flex-col flex-grow text-left bg-white peer-checked:bg-cherry-bg/40 transition-colors">
+                            <span class="text-cherry-text font-bold text-sm leading-snug break-words mb-2">${displayName}</span>
+                            <div class="mt-auto flex items-center justify-start">
+                                <span class="text-cherry-accent-dark font-mono font-bold text-base bg-cherry-accent/10 px-2 py-0.5 rounded-md">NT$ ${item.price}</span>
+                            </div>
+                        </div>
+                        
+                    </div>
+                `;
+                productList.appendChild(label);
+            });
+            
+            updateTotal();
+        });
+
+        function copyText(text, btnElement) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalIcon = btnElement.innerHTML;
+                btnElement.innerHTML = '<i class="fa-solid fa-check text-[10px]"></i>';
+                btnElement.classList.add('bg-green-400', 'border-green-400');
+                setTimeout(() => {
+                    btnElement.innerHTML = originalIcon;
+                    btnElement.classList.remove('bg-green-400', 'border-green-400');
+                }, 1500);
+            });
+        }
+
+        productList.addEventListener('change', updateTotal);
+        function updateTotal() {
+            const checkboxes = document.querySelectorAll('input[name="product_check"]:checked');
+            let total = 0;
+            checkboxes.forEach(chk => { total += parseInt(chk.dataset.price || 0); });
+            
+            step1Total.innerText = total;
+            totalInput.value = total;
+        }
+
+        nextStepBtn.addEventListener('click', () => {
+            const checkedBoxes = document.querySelectorAll('input[name="product_check"]:checked');
+            const buyerName = document.getElementById('buyerName').value.trim();
+            const buyerEmail = document.getElementById('buyerEmail').value.trim();
+
+            if (checkedBoxes.length === 0) { alert("⚠️ 請問要購買什麼呢？請至少選取一樣商品喔！"); return; }
+            if (buyerName === "") { alert("⚠️ 為了方便核對，請填寫您的暱稱唷！"); return; }
+            if (buyerEmail === "" || !buyerEmail.includes('@')) { alert("⚠️ 請填寫正確的電子信箱，檔案才寄得過去唷！"); return; }
+
+            summaryReview.innerHTML = "";
+            checkedBoxes.forEach(cb => {
+                let dName = cb.value.includes('|') ? cb.value.split('|')[0].trim() : cb.value;
+                let price = cb.dataset.price;
+                const pDiv = document.createElement('div');
+                // 🌸 關鍵修改：使用 flex justify-between 確保名稱靠左、金額自動推至最右邊
+                pDiv.className = "flex justify-between items-center text-xs py-1 border-b border-cherry-bg";
+                pDiv.innerHTML = `<span class="font-bold text-cherry-text pr-2 break-all">${displayShortName(cb.value)}</span><span class="font-mono text-cherry-text/80 whitespace-nowrap">$${price}</span>`;
+                summaryReview.appendChild(pDiv);
+            });
+
+            step1Container.classList.add('hidden');
+            step2Container.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        function displayShortName(val) {
+            return val.includes('|') ? val.split('|')[0].trim() : val;
+        }
+
+        prevStepBtn.addEventListener('click', () => {
+            step2Container.classList.add('hidden');
+            step1Container.classList.remove('hidden');
+        });
+
+        screenshotFile.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                if (file.size > 1024 * 1024 * 4) {
+                    alert("⚠️ 為了避免上傳失敗，圖片檔案大小請不要超過 4MB 唷！");
+                    this.value = "";
+                    return;
+                }
+                fileNameDisplay.innerText = `已選取：${file.name}`;
+                fileNameDisplay.classList.add('text-cherry-accent-dark');
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    screenshotBase64.value = e.target.result.split(',')[1];
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        const form = document.getElementById('orderForm');
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            const userAccount = document.getElementById('userAccount').value.trim();
+            const b64Data = screenshotBase64.value;
+
+            if (userAccount === "") { alert("⚠️ 請填寫匯款帳號後五碼以利對帳。"); return; }
+            if (!b64Data) { alert("⚠️ 請上傳您的匯款轉帳明細截圖照片。"); return; }
+
+            const btn = document.getElementById('submitBtn');
+            const originalBtnContent = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 表單密封傳送中...';
+
+            const checkedBoxes = document.querySelectorAll('input[name="product_check"]:checked');
+            let formData = new FormData(form);
+            let object = {};
+            
+            formData.forEach((value, key) => {
+                if(key !== "honeypot" && key !== "screenshot_base64") object[key] = value;
+            });
+            
+            object['theme'] = themeSelect.value;
+            object['product'] = Array.from(checkedBoxes).map(cb => cb.value).join(", ");
+            object['amount'] = totalInput.value;
+            object['screenshot'] = b64Data;
+
+            console.log("預計投遞的資料包內容：", object);
+            
+            setTimeout(() => {
+                form.style.display = 'none';
+                document.getElementById('successMsg').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
