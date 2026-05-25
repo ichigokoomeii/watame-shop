@@ -44,6 +44,22 @@
             color: #7A4F55;
             overflow-x: hidden;
         }
+
+        /* 🍓 草莓晃動動畫 */
+        @keyframes strawberry-wobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+        
+        .animate-strawberry {
+            display: inline-block;
+            animation: strawberry-wobble 1s ease-in-out infinite;
+            transform-origin: top center;
+            width: 70px;   /* 控制草莓圖示的寬度 */
+            height: 70px;  /* 控制草莓圖示的高度 */
+            fill: #FF94A2; /* 在這裡可以直接控制草莓的顏色（暖櫻粉） */
+        }
         
         .fade-in { animation: fadeIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -196,7 +212,7 @@
 
                         <div id="productSection" class="space-y-3">
                             <label class="block text-base font-bold text-cherry-text mb-2 pl-4 flex items-center gap-2">
-                                <i class="fa-solid fa-bag-shopping text-cherry-accent"></i> 選擇服設 (可多選)
+                                <i class="fa-solid fa-bag-shopping text-cherry-accent"></i> 選擇商品 (可多選)
                             </label>
                             <div id="productList" class="grid grid-cols-2 gap-3 w-full h-auto pb-2"></div>
                         </div>
@@ -208,7 +224,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-bold text-cherry-text mb-1.5 pl-2">電子信箱 *</label>
-                                <input type="email" id="buyerEmail" name="email" placeholder="接收服設檔案用" class="w-full px-4 py-3 text-cherry-text placeholder-cherry-border/70 text-sm transition-colors">
+                                <input type="email" id="buyerEmail" name="email" placeholder="接收商品檔案用" class="w-full px-4 py-3 text-cherry-text placeholder-cherry-border/70 text-sm transition-colors">
                             </div>
                         </div>
 
@@ -290,43 +306,21 @@
                     確認款項無誤後，檔案將盡快寄送至您的電子信箱。
                 </p>
                 <button onclick="location.reload()" class="px-8 py-2.5 bg-white border-2 border-cherry-accent text-cherry-accent rounded-full text-sm font-bold hover:bg-cherry-accent hover:text-white transition-colors">
-                    再填一張表單
+                    再填一張訂單票券
                 </button>
             </div>
         </div>
 
         <div class="text-center mt-10 flex flex-col items-center gap-2">
-            <div class="text-xl text-cherry-border space-x-3">
-                <i class="fa-solid fa-snowflake animate-flower inline-block text-sm"></i>
+            <div class="text-xl space-x-3">
+                <span class="animate-strawberry inline-block text-sm">🍓</span>
                 <i class="fa-solid fa-leaf"></i>
-                <i class="fa-solid fa-snowflake animate-flower inline-block text-sm"></i>
+                <span class="animate-strawberry inline-block text-sm">🍓</span>
             </div>
         </div>
     </div>
 
     <script>
-        const TEST_MOCK_DATA = {
-            "🌸 2026 春季草莓午茶派對": {
-                "contents": "1. 高解析度 PNG 透明底人物立繪\n2. 附帶三種差分表情物件（開心/驚訝/甜點咬咬）\n3. 商業延伸授權使用書",
-                "rules": "1. 本次委託皆為批發買斷制，售出不退。\n2. 禁止任何惡意二次改作或宣稱自製。\n3. 請於下單後 24 小時內完成匯款，否則名額會被小精靈取消唷！",
-                "bankInfo": "822, 1234567890123456",
-                "products": [
-                    { "name": "A款 ✶ 草莓慕斯連身裙", "price": 1200, "img": "https://placehold.co/100x100/FFE3E7/7A4F55?text=Strawberry" },
-                    { "name": "B款 ✶ 抹茶歐蕾圍裙套裝 | 限量熱賣", "price": 1500, "img": "https://placehold.co/100x100/E8F5E9/7A4F55?text=Matcha" },
-                    { "name": "C款 ✶ 伯爵紅茶優雅蓬蓬裙", "price": 1000, "img": "https://placehold.co/100x100/FFF5F5/7A4F55?text=BlackTea" }
-                ]
-            },
-            "🍬 軟綿綿糖果屋販售會": {
-                "contents": "1. 精緻 Q 版像素風全身服設\n2. 附贈專屬動態小動效 gif 檔",
-                "rules": "1. 僅供個人收藏、OC 使用，如需商業轉售請另行來信。\n2. 匯款完請務必上傳清晰明細圖供對帳。",
-                "bankInfo": "700, 00012345678901",
-                "products": [
-                    { "name": "糖果屋A ✶ 薄荷棉花糖", "price": 800, "img": "https://placehold.co/100x100/E0F7FA/7A4F55?text=Mint" },
-                    { "name": "糖果屋B ✶ 蜜桃泡泡糖", "price": 850, "img": "https://placehold.co/100x100/FFE3E7/7A4F55?text=Peach" }
-                ]
-            }
-        };
-
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxND8fU581HQUw2cnsihGUm3vJkktBGSWksfzzCo9_WJXRUwFpZdJJqsNpmpzHj8IQk/exec'; 
 
         let globalData = {}; 
@@ -361,8 +355,7 @@
                     initFormWithData(data);
                 })
                 .catch(err => {
-                    console.error("讀取雲端資料失敗，改用本地假資料代入:", err);
-                    initFormWithData(TEST_MOCK_DATA); // 若網路失敗則保留原有的假資料當作備援
+                    console.error("讀取雲端資料失敗", err);
                 });
         });
 
