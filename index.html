@@ -39,7 +39,7 @@
         .animate-flower { animation: flower-spin 4s infinite linear; }
         
         body {
-            background-color: #FFF5F5; /* 移除原本的 radial-gradient 點點背景 */
+            background-color: #FFF5F5; 
             font-family: 'cwTeXYen', 'Microsoft JhengHei', sans-serif;
             color: #7A4F55;
             overflow-x: hidden;
@@ -48,25 +48,51 @@
         .fade-in { animation: fadeIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .paper-card { 
+        /* 🎟️ 票根圓弧波浪狀卡片樣式 */
+        .ticket-card { 
             background-color: #FFFFFF;
-            border: 3px solid #F3D1D6;
-            border-radius: 32px;
+            border-left: 3px solid #F3D1D6;
+            border-right: 3px solid #F3D1D6;
             box-shadow: 0px 16px 32px rgba(243, 209, 214, 0.5);
             position: relative;
+            padding-top: 2.5rem;
+            padding-bottom: 2.5rem;
         }
-        
-        /* 蕾絲風格緞帶裝飾 */
-        .lace-ribbon {
-            background-color: #FF94A2;
-            height: 12px;
-            width: 140px;
+
+        /* 🎟️ 頂部與底部的純 CSS 圓弧波浪鋸齒效果（已完美連接左右邊框） */
+        .ticket-card::before, .ticket-card::after {
+            content: '';
             position: absolute;
-            top: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 6px;
+            left: 0;
+            right: 0;
+            height: 24px;
+            background-size: 24px 24px;
+            background-repeat: repeat-x;
             z-index: 10;
+        }
+
+        /* 頂部向內凹的大半圓弧線 */
+        .ticket-card::before {
+            top: -12px; /* 向上移動半個高度，讓圓心剛好切在邊界線上 */
+            background-image: 
+                /* Layer 1: 最內圈填滿外部網頁的粉紅背景色（#FFF5F5） */
+                radial-gradient(circle at 12px 0px, #FFF5F5 8px, transparent 8.5px),
+                /* Layer 2: 畫出豆沙色外框線，並將卡片內部填滿白色，同時加上左右端點的垂直閉合線 */
+                radial-gradient(circle at 12px 0px, transparent 8px, #F3D1D6 8.5px, #F3D1D6 11px, #FFFFFF 11.5px),
+                linear-gradient(to right, #F3D1D6 3px, transparent 3px),
+                linear-gradient(to left, #F3D1D6 3px, transparent 3px);
+        }
+
+        /* 底部向內凹的大半圓弧線 */
+        .ticket-card::after {
+            bottom: -12px; /* 向下移動半個高度，讓圓心剛好切在邊界線上 */
+            background-image: 
+                /* Layer 1: 最內圈填滿外部網頁的粉紅背景色（#FFF5F5） */
+                radial-gradient(circle at 12px 24px, #FFF5F5 8px, transparent 8.5px),
+                /* Layer 2: 畫出豆沙色外框線，並將卡片內部填滿白色，同時加上左右端點的垂直閉合線 */
+                radial-gradient(circle at 12px 24px, transparent 8px, #F3D1D6 8.5px, #F3D1D6 11px, #FFFFFF 11.5px),
+                linear-gradient(to right, #F3D1D6 3px, transparent 3px),
+                linear-gradient(to left, #F3D1D6 3px, transparent 3px);
         }
 
         input, select, textarea { 
@@ -120,7 +146,7 @@
         <div class="text-center mb-8 relative">
             <div class="inline-block relative">
                 <i class="fa-solid fa-wand-magic-sparkles text-cherry-accent text-2xl absolute -top-4 -right-6 animate-pulse"></i>
-                <h1 class="text-5xl font-bold text-cherry-text tracking-widest drop-shadow-sm" style="font-family: 'BiauKai', 'STYuanti-TC-Regular', 'Comic Sans MS',                                       'cwTeXYen', 'Microsoft JhengHei', sans-serif;">
+                <h1 class="text-5xl font-bold text-cherry-text tracking-widest drop-shadow-sm" style="font-family: 'BiauKai', 'STYuanti-TC-Regular', 'Comic Sans MS', 'cwTeXYen', 'Microsoft JhengHei', sans-serif;">
                     小莓奶糖
                 </h1>
                 <div class="h-3 bg-deco-pink w-[110%] absolute bottom-1 -left-2 -z-10 rounded-full"></div>
@@ -132,10 +158,9 @@
             </div>
         </div>
 
-        <div class="paper-card p-6 md:p-10">
-            <div class="lace-ribbon"></div>
+        <div class="ticket-card p-6 md:p-10 pt-10 md:pt-14">
 
-            <div id="loadingOverlay" class="absolute inset-0 bg-white/95 z-50 rounded-[32px] flex flex-col items-center justify-center backdrop-blur-sm">
+            <div id="loadingOverlay" class="absolute inset-0 bg-white/95 z-50 rounded-lg flex flex-col items-center justify-center backdrop-blur-sm">
                 <i class="fa-solid fa-snowflake animate-flower text-4xl text-cherry-accent mb-4"></i>
                 <span class="text-cherry-text font-bold text-lg tracking-widest">🌸 正在翻開粉色手帳...</span>
             </div>
@@ -464,7 +489,6 @@
                 let dName = cb.value.includes('|') ? cb.value.split('|')[0].trim() : cb.value;
                 let price = cb.dataset.price;
                 const pDiv = document.createElement('div');
-                // 🌸 關鍵修改：使用 flex justify-between 確保名稱靠左、金額自動推至最右邊
                 pDiv.className = "flex justify-between items-center text-xs py-1 border-b border-cherry-bg";
                 pDiv.innerHTML = `<span class="font-bold text-cherry-text pr-2 break-all">${displayShortName(cb.value)}</span><span class="font-mono text-cherry-text/80 whitespace-nowrap">$${price}</span>`;
                 summaryReview.appendChild(pDiv);
