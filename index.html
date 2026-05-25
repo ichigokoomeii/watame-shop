@@ -345,10 +345,8 @@
         const screenshotBase64 = document.getElementById('screenshotBase64');
 
         window.addEventListener('load', () => {
-            // 顯示粉色票券載入畫面
             loadingOverlay.style.display = 'flex'; 
     
-            // 向 GAS 發送請求獲取真正的商品設定
             fetch(`${SCRIPT_URL}?action=getProducts`)
                 .then(response => response.json())
                 .then(data => {
@@ -538,20 +536,22 @@
             
             const userAccount = document.getElementById('userAccount').value.trim();
             const b64Data = screenshotBase64.value;
-
+        
             if (userAccount === "") { alert("⚠️ 請填寫匯款帳號後五碼以利對帳。"); return; }
             if (!b64Data) { alert("⚠️ 請上傳您的匯款轉帳明細截圖照片。"); return; }
-
+        
             const btn = document.getElementById('submitBtn');
             const originalBtnContent = btn.innerHTML;
             
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 表單密封傳送中...';
-
+        
             const checkedBoxes = document.querySelectorAll('input[name="product_check"]:checked');
             let formData = new FormData(form);
             let object = {};
             
+            object['action'] = 'submitOrder';
+        
             formData.forEach((value, key) => {
                 if(key !== "honeypot" && key !== "screenshot_base64") object[key] = value;
             });
@@ -560,14 +560,35 @@
             object['product'] = Array.from(checkedBoxes).map(cb => cb.value).join(", ");
             object['amount'] = totalInput.value;
             object['screenshot'] = b64Data;
-
+        
             console.log("預計投遞的資料包內容：", object);
             
-            setTimeout(() => {
-                form.style.display = 'none';
-                document.getElementById('successMsg').classList.remove('hidden');
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 1000);
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify(object)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("網路連線異常，請稍後再試。");
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.status === "success") {
+                    form.style.display = 'none';
+                    document.getElementById('successMsg').classList.remove('hidden');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    alert("❌ 訂單送出失敗：\n" + data.message);
+                    btn.disabled = false;
+                    btn.innerHTML = originalBtnContent;
+                }
+            })
+            .catch(error => {
+                alert("⚠️ 系統發生錯誤，請聯絡小莓奶糖：\n" + error.message);
+                btn.disabled = false;
+                btn.innerHTML = originalBtnContent;
+            });
         });
     </script>
 </body>
