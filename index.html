@@ -162,7 +162,7 @@
 
             <div id="loadingOverlay" class="absolute inset-0 bg-white/95 z-50 rounded-lg flex flex-col items-center justify-center backdrop-blur-sm">
                 <i class="fa-solid fa-snowflake animate-flower text-4xl text-cherry-accent mb-4"></i>
-                <span class="text-cherry-text font-bold text-lg tracking-widest">🌸 正在翻開粉色手帳...</span>
+                <span class="text-cherry-text font-bold text-lg tracking-widest">🌸 正在尋找粉色票券...</span>
             </div>
 
             <form id="orderForm" class="space-y-6">
@@ -284,9 +284,9 @@
                 <div class="w-20 h-20 mx-auto mb-5 bg-[#FFF0F2] border-4 border-white shadow-[0_0_0_4px_#FF94A2] rounded-full flex items-center justify-center">
                     <i class="fa-solid fa-heart text-3xl text-cherry-accent"></i>
                 </div>
-                <h3 class="text-2xl font-bold text-cherry-text mb-2">粉色手帳投遞成功！</h3>
+                <h3 class="text-2xl font-bold text-cherry-text mb-2">粉色票券投遞成功！</h3>
                 <p class="text-sm text-cherry-text/80 mb-6 leading-relaxed">
-                    小莓已經將您的訂單收進手帳本囉！<br>
+                    小莓已經將您的訂單收進票券本囉！<br>
                     確認款項無誤後，檔案將盡快寄送至您的電子信箱。
                 </p>
                 <button onclick="location.reload()" class="px-8 py-2.5 bg-white border-2 border-cherry-accent text-cherry-accent rounded-full text-sm font-bold hover:bg-cherry-accent hover:text-white transition-colors">
@@ -327,7 +327,7 @@
             }
         };
 
-        const SCRIPT_URL = 'https://script.google.com/macros/s/改這邊達成真正的API'; 
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxND8fU581HQUw2cnsihGUm3vJkktBGSWksfzzCo9_WJXRUwFpZdJJqsNpmpzHj8IQk/exec'; 
 
         let globalData = {}; 
 
@@ -351,7 +351,19 @@
         const screenshotBase64 = document.getElementById('screenshotBase64');
 
         window.addEventListener('load', () => {
-            initFormWithData(TEST_MOCK_DATA);
+            // 顯示粉色票券載入畫面
+            loadingOverlay.style.display = 'flex'; 
+    
+            // 向 GAS 發送請求獲取真正的商品設定
+            fetch(`${SCRIPT_URL}?action=getProducts`)
+                .then(response => response.json())
+                .then(data => {
+                    initFormWithData(data);
+                })
+                .catch(err => {
+                    console.error("讀取雲端資料失敗，改用本地假資料代入:", err);
+                    initFormWithData(TEST_MOCK_DATA); // 若網路失敗則保留原有的假資料當作備援
+                });
         });
 
         function initFormWithData(data) {
