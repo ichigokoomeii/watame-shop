@@ -202,7 +202,7 @@
                     <div id="infoSection" class="hidden space-y-6 fade-in">
                         <details class="bg-[#FFFDFD] border-2 border-cherry-border rounded-[20px] overflow-hidden group" open>
                             <summary class="cursor-pointer p-4 px-5 font-bold text-cherry-text flex justify-between items-center hover:bg-cherry-bg/30 select-none">
-                                <span class="flex items-center gap-2"><i class="fa-solid fa-bullhorn text-cherry-accent"></i> 購買須知與內容物</span>
+                                <span class="flex items-center gap-2"><i class="fa-solid fa-bullhorn text-cherry-accent"></i> 商品說明與購買須知</span>
                                 <div class="text-cherry-accent group-open:rotate-180 transition-transform bg-white w-7 h-7 rounded-full flex items-center justify-center border border-cherry-border">
                                     <i class="fa-solid fa-angle-down text-xs"></i>
                                 </div>
@@ -314,7 +314,7 @@
         <div class="text-center mt-10 flex flex-col items-center gap-2">
             <div class="text-xl space-x-3">
                 <span class="animate-strawberry inline-block text-sm">🍓</span>
-                <i class="fa-solid fa-leaf"></i>
+                <span class="animate-strawberry inline-block text-sm">🍓</span>
                 <span class="animate-strawberry inline-block text-sm">🍓</span>
             </div>
         </div>
@@ -380,7 +380,7 @@
             infoSection.classList.remove('hidden');
 
             let displayRules = "";
-            if(data.contents) displayRules += `【 內 容 物 明 細 】\n${data.contents}\n\n`;
+            if(data.contents) displayRules += `【 商 品 說 明 】\n${data.contents}\n\n`;
             if(data.rules) displayRules += `【 購 買 須 知 規 範 】\n${data.rules}`;
             ruleText.innerText = displayRules || "本商品主題無說明與特殊規範。";
 
