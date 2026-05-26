@@ -186,17 +186,15 @@
 
                 <div id="step1Container" class="space-y-6">
                     <div class="group relative">
-                        <label class="block text-base font-bold text-cherry-text mb-2 pl-2 flex items-center gap-2">
+                        <label class="block text-base font-bold text-cherry-text mb-3 pl-2 flex items-center gap-2">
                             <i class="fa-solid fa-star text-cherry-accent"></i> 選擇販售主題
                         </label>
-                        <div class="relative">
-                            <select id="themeSelect" class="w-full px-5 py-3.5 appearance-none font-bold text-cherry-text cursor-pointer text-base shadow-sm">
-                                <option value="" disabled selected>請點此選擇販售主題...</option>
-                            </select>
-                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-cherry-accent">
-                                <i class="fa-solid fa-chevron-down text-base"></i>
+                        
+                        <input type="hidden" id="themeSelect" value="">
+                        
+                        <div id="themeCardContainer" class="flex md:flex-wrap gap-4 overflow-x-auto md:overflow-x-visible py-3 px-2 scrollbar-hide snap-x snap-mandatory justify-start md:justify-center">
                             </div>
-                        </div>
+                        <p id="scrollHint" class="text-[12px] text-cherry-text/40 text-right pr-2 mt-1" style="display: none;">左右滑滑，看更多主題卡片呦！<i class="fa-solid fa-hand-pointer animate-bounce mr-1"></i></p>
                     </div>
 
                     <div id="infoSection" class="hidden space-y-6 fade-in">
@@ -326,6 +324,7 @@
         let globalData = {}; 
 
         const themeSelect = document.getElementById('themeSelect');
+        const themeCardContainer = document.getElementById('themeCardContainer'); // 🍓 新增的卡片容器
         const infoSection = document.getElementById('infoSection');
         const productList = document.getElementById('productList');
         const ruleText = document.getElementById('ruleText');
@@ -357,21 +356,94 @@
                 });
         });
 
+        // 🍓 再次優化版：確保打勾勾（z-50）絕對不會被背景圖或文字遮擋
         function initFormWithData(data) {
             loadingOverlay.style.display = 'none';
             globalData = data;
-            themeSelect.innerHTML = '<option value="" disabled selected>請點此選擇販售主題...</option>';
+            themeCardContainer.innerHTML = '';
             
             Object.keys(data).forEach(theme => {
-                let option = document.createElement('option');
-                option.value = theme;
-                option.text = theme;
-                themeSelect.appendChild(option);
+                // 為每一個主題建立一個拍立得可愛小卡片
+                let card = document.createElement('div');
+                card.className = "theme-card snap-center shrink-0 w-[140px] h-[150px] border-2 border-cherry-border rounded-[20px] bg-white p-3 text-center cursor-pointer transition-all duration-300 hover:border-cherry-accent hover:shadow-md relative flex flex-col items-center justify-between select-none overflow-hidden";
+                card.dataset.value = theme;
+                
+                // 🔍 找到該主題下，第一個商品的第一張圖片
+                let firstImgSrc = 'https://placehold.co/200x200/F3D1D6/white?text=No+Img';
+                const themeData = data[theme];
+                if (themeData && themeData.products && themeData.products.length > 0) {
+                    let rawImg = themeData.products[0].img;
+                    if (rawImg && rawImg.includes("drive.google.com") && rawImg.includes("/view")) {
+                        const idMatch = rawImg.match(/\/d\/(.+?)\//);
+                        if (idMatch) rawImg = `https://drive.google.com/uc?export=view&id=${idMatch[1]}`;
+                    }
+                    if (rawImg) firstImgSrc = rawImg;
+                }
+
+                // 將打勾勾（success-badge）獨立出來放在最後面，並強行壓上 z-50 頂天層級
+                card.innerHTML = `
+                    <img src="${firstImgSrc}" onerror="this.onerror=null; this.src='https://placehold.co/200x200/F3D1D6/white?text=No+Img';" class="absolute inset-0 w-full h-full object-cover opacity-50 z-0 pointer-events-none group-hover:scale-105 transition-transform duration-500">
+                    
+                    <div class="w-10 h-10 rounded-full bg-white/80 backdrop-blur-xs flex items-center justify-center text-cherry-accent text-lg shadow-inner group-hover:scale-110 transition-transform z-10 mt-1">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    
+                    <span class="text-sm font-bold text-cherry-text tracking-wide break-all leading-tight z-10 mb-2 bg-white/60 backdrop-blur-xs px-1.5 py-0.5 rounded-md">${theme}</span>
+                    
+                    <div class="success-badge absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-cherry-accent text-white border border-white text-[10px] flex items-center justify-center shadow-xs hidden z-50">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                `;
+                
+                // 綁定點擊事件
+                card.addEventListener('click', function() {
+                    selectTheme(theme, card);
+                });
+                
+                themeCardContainer.appendChild(card);
             });
+            // 🍓 檢查主題容器是否需要左右滑動，並控制提示文字顯示與否
+            function checkScrollable() {
+                const hint = document.getElementById('scrollHint');
+                if (!hint) return;
+                
+                // 🔍 判斷容器的實際內容寬度是否大於目前可見寬度（代表被切掉、需要滑動）
+                const isScrollable = themeCardContainer.scrollWidth > themeCardContainer.clientWidth;
+                
+                if (isScrollable) {
+                    hint.style.display = 'block'; // 有捲軸就顯示提示
+                } else {
+                    hint.style.display = 'none';  // 沒捲軸或桌機版自動換行就隱藏
+                }
+            }
+
+            // 1. 初始渲染完畢，等卡片全部畫好後的 150 毫秒進行精準檢查
+            setTimeout(checkScrollable, 150);
+            
+            // 2. 當使用者縮放瀏覽器視窗、或者手機橫放改變大小時，隨時重新計算
+            window.addEventListener('resize', checkScrollable);
         }
 
-        themeSelect.addEventListener('change', function() {
-            const theme = this.value;
+        // 🍓 處理卡片選取的視覺效果與連動原本的功能
+        function selectTheme(theme, clickedCard) {
+            // 1. 清除所有卡片的選取狀態
+            document.querySelectorAll('.theme-card').forEach(c => {
+                c.classList.remove('border-cherry-accent', 'ring-4', 'ring-cherry-accent/20', 'bg-cherry-bg/20', 'scale-105');
+                c.classList.add('border-cherry-border', 'bg-white');
+                c.querySelector('.success-badge').classList.add('hidden');
+                c.querySelector('.success-badge').classList.remove('flex');
+            });
+
+            // 2. 將被點擊的卡片套上高亮特效
+            clickedCard.classList.remove('border-cherry-border', 'bg-white');
+            clickedCard.classList.add('border-cherry-accent', 'ring-4', 'ring-cherry-accent/20', 'bg-cherry-bg/20', 'scale-105');
+            clickedCard.querySelector('.success-badge').classList.remove('hidden');
+            clickedCard.querySelector('.success-badge').classList.add('flex');
+
+            // 3. 完美同步至原本隱藏的 themeSelect input，以利後面驗證和傳輸
+            themeSelect.value = theme;
+
+            // --- 以下完全保留你原本切換下拉選單時觸發的後端資料撈取、商品清單生成邏輯 ---
             const data = globalData[theme];
             if(!data) return;
 
@@ -426,8 +498,9 @@
                     badge = parts[1].trim();
                 }
 
+                // 🍓 幫商品卡片加上 peer-checked 連動的無敵粉嫩小勾勾
                 label.innerHTML = `
-                    <input type="checkbox" name="product_check" value="${submitValue}" data-price="${item.price}" class="peer absolute opacity-0 w-0 h-0">
+                    <input type="checkbox" id="chk-${theme}-${item.name.replace(/\s+/g, '')}" name="product_check" value="${submitValue}" data-price="${item.price}" class="peer absolute opacity-0 w-0 h-0">
                     
                     <div class="h-full border-2 border-cherry-border rounded-[20px] overflow-hidden transition-all duration-300 bg-white hover:border-cherry-accent hover:shadow-md peer-checked:border-cherry-accent peer-checked:ring-4 peer-checked:ring-cherry-accent/20 flex flex-col relative group">
                         
@@ -447,14 +520,23 @@
                                 <span class="text-cherry-accent-dark font-mono font-bold text-base bg-cherry-accent/10 px-2 py-0.5 rounded-md">NT$ ${item.price}</span>
                             </div>
                         </div>
-                        
+                      
+                    </div>
+
+                    <div class="success-badge absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-cherry-accent text-white border border-white text-[10px] items-center justify-center shadow-xs hidden peer-checked:flex z-50 pointer-events-none">
+                        <i class="fa-solid fa-check"></i>
                     </div>
                 `;
                 productList.appendChild(label);
             });
             
             updateTotal();
-        });
+            
+            // 🍓 加碼貼心細節：點選完主題卡片後，自動幫畫面平滑向下滾動一點點，帶引買家去看下方剛生出來的商品說明與清單
+            setTimeout(() => {
+                infoSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 150);
+        }
 
         function copyText(text, btnElement) {
             navigator.clipboard.writeText(text).then(() => {
