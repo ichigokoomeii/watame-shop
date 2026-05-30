@@ -6,8 +6,8 @@
     <title>小莓奶糖批發服設</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/cwtexyen.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <script>
         tailwind.config = {
@@ -48,16 +48,16 @@
         /* 🍓 草莓晃動動畫 */
         @keyframes strawberry-wobble {
             0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-5deg); }
-            75% { transform: rotate(5deg); }
+            25% { transform: rotate(-3deg); }
+            75% { transform: rotate(3deg); }
         }
         
         .animate-strawberry {
             display: inline-block;
             animation: strawberry-wobble 1s ease-in-out infinite;
             transform-origin: top center;
-            width: 70px;   /* 控制草莓圖示的寬度 */
-            height: 70px;  /* 控制草莓圖示的高度 */
+            width: 50px;   /* 控制草莓圖示的寬度 */
+            height: 50px;  /* 控制草莓圖示的高度 */
             fill: #FF94A2; /* 在這裡可以直接控制草莓的顏色（暖櫻粉） */
         }
         
@@ -150,12 +150,127 @@
         .whitespace-pre-wrap { white-space: pre-wrap; }
     </style>
 </head>
+<div class="fixed bottom-6 right-6 flex flex-col-reverse items-center gap-3 z-[9999] group">
+    
+    <button type="button" class="w-12 h-12 rounded-full bg-white border-2 border-cherry-border shadow-md flex items-center justify-center transition-all duration-300 hover:border-cherry-accent hover:scale-110 active:scale-95 cursor-pointer relative z-10 group/btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="w-10 h-10 transform translate-y-0.5 group-hover/btn:rotate-12 transition-transform duration-300">
+            <path d="M42,28 C32,23 35,14 44,17 C46,18 47,22 46,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M58,28 C68,23 65,14 56,17 C54,18 53,22 54,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M50,15 C54,10 62,17 55,27 C52,24 48,24 45,27 C38,17 46,10 50,15 Z" fill="#A7F3D0" stroke="#E27483" stroke-width="1.5" />
+            
+            <path d="M50,26 C68,26 78,42 72,62 C67,78 56,86 50,86 C44,86 33,78 28,62 C22,42 32,26 50,26 Z" fill="#FF94A2" stroke="#F3D1D6" stroke-width="2" />
+            
+            <circle cx="44" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="52" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="38" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="62" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="44" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="76" r="2" fill="#FFFFFF" opacity="0.9" />
+        </svg>
+    </button>
+    
+    <div class="flex flex-col gap-2 opacity-0 scale-75 translate-y-4 pointer-events-none transition-all duration-300 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0 group-hover:pointer-events-auto">
+         <a href="https://discord.gg/GRWkGfWjd8" target="_blank" class="w-10 h-10 rounded-full bg-white border-2 border-cherry-border flex items-center justify-center shadow-sm transition-all duration-300 hover:border-cherry-accent hover:scale-110 group/item" title="前往 Discord">
+            <i class="fa-brands fa-discord text-cherry-text/70 group-hover/item:text-cherry-accent transition-colors text-base"></i>
+        </a>
+
+        <a href="https://x.com/meii_xox" target="_blank" class="w-10 h-10 rounded-full bg-white border-2 border-cherry-border flex items-center justify-center shadow-sm transition-all duration-300 hover:border-cherry-accent hover:scale-110 group/item" title="前往 X(Twitter)">
+            <i class="fa-brands fa-x-twitter text-cherry-text/70 group-hover/item:text-cherry-accent transition-colors text-base"></i>
+        </a>
+        
+        <a href="https://www.plurk.com/Juu_" target="_blank" class="w-10 h-10 rounded-full bg-white border-2 border-cherry-border flex items-center justify-center shadow-sm transition-all duration-300 hover:border-cherry-accent hover:scale-110 group/item" title="前往 噗浪">
+            <span class="text-sm font-black text-cherry-text/70 group-hover/item:text-cherry-accent font-mono transition-colors">P</span>
+        </a>
+
+        <a href="https://www.instagram.com/miyali92" target="_blank" class="w-10 h-10 rounded-full bg-white border-2 border-cherry-border flex items-center justify-center shadow-sm transition-all duration-300 hover:border-cherry-accent hover:scale-110 group/item" title="前往 Instagram">
+            <i class="fa-brands fa-instagram text-cherry-text/70 group-hover/item:text-cherry-accent transition-colors text-base"></i>
+        </a>
+
+        <a href="https://www.threads.com/@miyali92" target="_blank" class="w-10 h-10 rounded-full bg-white border-2 border-cherry-border flex items-center justify-center shadow-sm transition-all duration-300 hover:border-cherry-accent hover:scale-110 group/item" title="前往 Threads">
+            <i class="fa-brands fa-threads text-cherry-text/70 group-hover/item:text-cherry-accent transition-colors text-base"></i>
+        </a>
+        
+        <a href="https://www.facebook.com/wa.wa.869479" target="_blank" class="w-10 h-10 rounded-full bg-white border-2 border-cherry-border flex items-center justify-center shadow-sm transition-all duration-300 hover:border-cherry-accent hover:scale-110 group/item" title="前往 Facebook">
+            <i class="fa-brands fa-facebook text-cherry-text/70 group-hover/item:text-cherry-accent transition-colors text-base"></i>
+        </a>
+    </div>
+</div>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 py-12">
 
-    <div class="fixed top-10 left-10 text-4xl text-cherry-border opacity-40 rotate-[-15deg]"><i class="fa-solid fa-ribbon"></i></div>
-    <div class="fixed bottom-20 right-10 text-5xl text-deco-pink opacity-60 rotate-[20deg]"><i class="fa-solid fa-seedling"></i></div>
-    <div class="fixed top-1/4 right-12 text-3xl text-cherry-accent opacity-30 rotate-[45deg]"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-    <div class="fixed bottom-10 left-20 text-4xl text-cherry-border opacity-50 rotate-[-10deg]"><i class="fa-solid fa-heart"></i></div>
+    <div class="fixed top-10 left-10 text-4xl text-cherry-border opacity-40 rotate-[-15deg]">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="animate-strawberry inline-block text-sm w-8 h-8 transform translate-y-0.5 group-hover/btn:rotate-12 transition-transform duration-300">
+            <path d="M42,28 C32,23 35,14 44,17 C46,18 47,22 46,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M58,28 C68,23 65,14 56,17 C54,18 53,22 54,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M50,15 C54,10 62,17 55,27 C52,24 48,24 45,27 C38,17 46,10 50,15 Z" fill="#A7F3D0" stroke="#E27483" stroke-width="1.5" />
+            
+            <path d="M50,26 C68,26 78,42 72,62 C67,78 56,86 50,86 C44,86 33,78 28,62 C22,42 32,26 50,26 Z" fill="#FF94A2" stroke="#F3D1D6" stroke-width="2" />
+            
+            <circle cx="44" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="52" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="38" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="62" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="44" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="76" r="2" fill="#FFFFFF" opacity="0.9" />
+        </svg>
+    </div>
+    <div class="fixed bottom-8 right-10 text-4xl text-deco-pink opacity-60 rotate-[125deg]">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="animate-strawberry inline-block text-sm w-8 h-8 transform translate-y-0.5 group-hover/btn:rotate-12 transition-transform duration-300">
+            <path d="M42,28 C32,23 35,14 44,17 C46,18 47,22 46,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M58,28 C68,23 65,14 56,17 C54,18 53,22 54,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M50,15 C54,10 62,17 55,27 C52,24 48,24 45,27 C38,17 46,10 50,15 Z" fill="#A7F3D0" stroke="#E27483" stroke-width="1.5" />
+            
+            <path d="M50,26 C68,26 78,42 72,62 C67,78 56,86 50,86 C44,86 33,78 28,62 C22,42 32,26 50,26 Z" fill="#FF94A2" stroke="#F3D1D6" stroke-width="2" />
+            
+            <circle cx="44" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="52" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="38" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="62" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="44" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="76" r="2" fill="#FFFFFF" opacity="0.9" />
+        </svg>
+    </div>
+   <div class="fixed top-10 right-10 text-4xl text-cherry-accent opacity-30 rotate-[45deg]">
+       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="animate-strawberry inline-block text-sm w-8 h-8 transform translate-y-0.5 group-hover/btn:rotate-12 transition-transform duration-300">
+            <path d="M42,28 C32,23 35,14 44,17 C46,18 47,22 46,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M58,28 C68,23 65,14 56,17 C54,18 53,22 54,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M50,15 C54,10 62,17 55,27 C52,24 48,24 45,27 C38,17 46,10 50,15 Z" fill="#A7F3D0" stroke="#E27483" stroke-width="1.5" />
+            
+            <path d="M50,26 C68,26 78,42 72,62 C67,78 56,86 50,86 C44,86 33,78 28,62 C22,42 32,26 50,26 Z" fill="#FF94A2" stroke="#F3D1D6" stroke-width="2" />
+            
+            <circle cx="44" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="52" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="38" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="62" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="44" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="76" r="2" fill="#FFFFFF" opacity="0.9" />
+        </svg>
+   </div>
+    <div class="fixed bottom-8 left-10 text-4xl text-cherry-border opacity-50 rotate-[-145deg]">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="animate-strawberry inline-block text-sm w-8 h-8 transform translate-y-0.5 group-hover/btn:rotate-12 transition-transform duration-300">
+            <path d="M42,28 C32,23 35,14 44,17 C46,18 47,22 46,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M58,28 C68,23 65,14 56,17 C54,18 53,22 54,26 Z" fill="#BBF7D0" stroke="#E27483" stroke-width="1.2" />
+            <path d="M50,15 C54,10 62,17 55,27 C52,24 48,24 45,27 C38,17 46,10 50,15 Z" fill="#A7F3D0" stroke="#E27483" stroke-width="1.5" />
+            
+            <path d="M50,26 C68,26 78,42 72,62 C67,78 56,86 50,86 C44,86 33,78 28,62 C22,42 32,26 50,26 Z" fill="#FF94A2" stroke="#F3D1D6" stroke-width="2" />
+            
+            <circle cx="44" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="42" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="52" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="38" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="62" cy="56" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="44" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="56" cy="68" r="2" fill="#FFFFFF" opacity="0.9" />
+            <circle cx="50" cy="76" r="2" fill="#FFFFFF" opacity="0.9" />
+        </svg>
+    </div>
 
     <div class="max-w-[540px] w-full fade-in relative z-10"> 
         
@@ -194,7 +309,7 @@
                         
                         <div id="themeCardContainer" class="flex md:flex-wrap gap-4 overflow-x-auto md:overflow-x-visible py-3 px-2 scrollbar-hide snap-x snap-mandatory justify-start md:justify-center">
                             </div>
-                        <p id="scrollHint" class="text-[12px] text-cherry-text/40 text-right pr-2 mt-1" style="display: none;">左右滑滑，看更多主題卡片呦！<i class="fa-solid fa-hand-pointer animate-bounce mr-1"></i></p>
+                        <p id="scrollHint" class="text-[14px] text-cherry-text/40 text-right pr-2 mt-1" style="display: none;">左右滑滑，看更多主題卡片呦！<i class="fa-solid fa-hand-pointer animate-bounce mr-1"></i></p>
                     </div>
 
                     <div id="infoSection" class="hidden space-y-6 fade-in">
@@ -310,11 +425,7 @@
         </div>
 
         <div class="text-center mt-10 flex flex-col items-center gap-2">
-            <div class="text-xl space-x-3">
-                <span class="animate-strawberry inline-block text-sm">🍓</span>
-                <span class="animate-strawberry inline-block text-sm">🍓</span>
-                <span class="animate-strawberry inline-block text-sm">🍓</span>
-            </div>
+          
         </div>
     </div>
 
@@ -642,8 +753,6 @@
             object['product'] = Array.from(checkedBoxes).map(cb => cb.value).join(", ");
             object['amount'] = totalInput.value;
             object['screenshot'] = b64Data;
-        
-            console.log("預計投遞的資料包內容：", object);
             
             fetch(SCRIPT_URL, {
                 method: "POST",
