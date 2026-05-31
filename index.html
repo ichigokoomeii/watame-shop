@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小莓奶糖批發服設</title>
+    <title>小莓奶糖 批發服設</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/earlyaccess/cwtexyen.css">
@@ -31,7 +31,7 @@
         }
     </script>
     <style>
-        /* 🌸 花朵旋轉動畫 */
+        /* 花朵旋轉動畫 */
         @keyframes flower-spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -45,7 +45,7 @@
             overflow-x: hidden;
         }
 
-        /* 🍓 草莓晃動動畫 */
+        /* 草莓晃動動畫 */
         @keyframes strawberry-wobble {
             0%, 100% { transform: rotate(0deg); }
             25% { transform: rotate(-3deg); }
@@ -58,13 +58,13 @@
             transform-origin: top center;
             width: 50px;   /* 控制草莓圖示的寬度 */
             height: 50px;  /* 控制草莓圖示的高度 */
-            fill: #FF94A2; /* 在這裡可以直接控制草莓的顏色（暖櫻粉） */
+            fill: #FF94A2; /* 控制草莓的顏色（暖櫻粉） */
         }
         
         .fade-in { animation: fadeIn 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 🎟️ 票根圓弧波浪狀卡片樣式 */
+        /* 票根圓弧波浪狀卡片樣式 */
         .ticket-card { 
             background-color: #FFFFFF;
             border-left: 3px solid #F3D1D6;
@@ -75,7 +75,7 @@
             padding-bottom: 2.5rem;
         }
 
-        /* 🎟️ 頂部與底部的純 CSS 圓弧波浪鋸齒效果（已完美連接左右邊框） */
+        /* 頂部與底部的純 CSS 圓弧波浪鋸齒效果 */
         .ticket-card::before, .ticket-card::after {
             content: '';
             position: absolute;
@@ -467,19 +467,16 @@
                 });
         });
 
-        // 🍓 再次優化版：確保打勾勾（z-50）絕對不會被背景圖或文字遮擋
         function initFormWithData(data) {
             loadingOverlay.style.display = 'none';
             globalData = data;
             themeCardContainer.innerHTML = '';
             
             Object.keys(data).forEach(theme => {
-                // 為每一個主題建立一個拍立得可愛小卡片
                 let card = document.createElement('div');
                 card.className = "theme-card snap-center shrink-0 w-[140px] h-[150px] border-2 border-cherry-border rounded-[20px] bg-white p-3 text-center cursor-pointer transition-all duration-300 hover:border-cherry-accent hover:shadow-md relative flex flex-col items-center justify-between select-none overflow-hidden";
                 card.dataset.value = theme;
                 
-                // 🔍 找到該主題下，第一個商品的第一張圖片
                 let firstImgSrc = 'https://placehold.co/200x200/F3D1D6/white?text=No+Img';
                 const themeData = data[theme];
                 if (themeData && themeData.products && themeData.products.length > 0) {
@@ -491,7 +488,6 @@
                     if (rawImg) firstImgSrc = rawImg;
                 }
 
-                // 將打勾勾（success-badge）獨立出來放在最後面，並強行壓上 z-50 頂天層級
                 card.innerHTML = `
                     <img src="${firstImgSrc}" onerror="this.onerror=null; this.src='https://placehold.co/200x200/F3D1D6/white?text=No+Img';" class="absolute inset-0 w-full h-full object-cover opacity-50 z-0 pointer-events-none group-hover:scale-105 transition-transform duration-500">
                     
@@ -506,38 +502,31 @@
                     </div>
                 `;
                 
-                // 綁定點擊事件
                 card.addEventListener('click', function() {
                     selectTheme(theme, card);
                 });
                 
                 themeCardContainer.appendChild(card);
             });
-            // 🍓 檢查主題容器是否需要左右滑動，並控制提示文字顯示與否
             function checkScrollable() {
                 const hint = document.getElementById('scrollHint');
                 if (!hint) return;
                 
-                // 🔍 判斷容器的實際內容寬度是否大於目前可見寬度（代表被切掉、需要滑動）
                 const isScrollable = themeCardContainer.scrollWidth > themeCardContainer.clientWidth;
                 
                 if (isScrollable) {
-                    hint.style.display = 'block'; // 有捲軸就顯示提示
+                    hint.style.display = 'block';
                 } else {
-                    hint.style.display = 'none';  // 沒捲軸或桌機版自動換行就隱藏
+                    hint.style.display = 'none';
                 }
             }
 
-            // 1. 初始渲染完畢，等卡片全部畫好後的 150 毫秒進行精準檢查
             setTimeout(checkScrollable, 150);
             
-            // 2. 當使用者縮放瀏覽器視窗、或者手機橫放改變大小時，隨時重新計算
             window.addEventListener('resize', checkScrollable);
         }
 
-        // 🍓 處理卡片選取的視覺效果與連動原本的功能
         function selectTheme(theme, clickedCard) {
-            // 1. 清除所有卡片的選取狀態
             document.querySelectorAll('.theme-card').forEach(c => {
                 c.classList.remove('border-cherry-accent', 'ring-4', 'ring-cherry-accent/20', 'bg-cherry-bg/20', 'scale-105');
                 c.classList.add('border-cherry-border', 'bg-white');
@@ -545,16 +534,13 @@
                 c.querySelector('.success-badge').classList.remove('flex');
             });
 
-            // 2. 將被點擊的卡片套上高亮特效
             clickedCard.classList.remove('border-cherry-border', 'bg-white');
             clickedCard.classList.add('border-cherry-accent', 'ring-4', 'ring-cherry-accent/20', 'bg-cherry-bg/20', 'scale-105');
             clickedCard.querySelector('.success-badge').classList.remove('hidden');
             clickedCard.querySelector('.success-badge').classList.add('flex');
 
-            // 3. 完美同步至原本隱藏的 themeSelect input，以利後面驗證和傳輸
             themeSelect.value = theme;
 
-            // --- 以下完全保留你原本切換下拉選單時觸發的後端資料撈取、商品清單生成邏輯 ---
             const data = globalData[theme];
             if(!data) return;
 
@@ -609,7 +595,6 @@
                     badge = parts[1].trim();
                 }
 
-                // 🍓 幫商品卡片加上 peer-checked 連動的無敵粉嫩小勾勾
                 label.innerHTML = `
                     <input type="checkbox" id="chk-${theme}-${item.name.replace(/\s+/g, '')}" name="product_check" value="${submitValue}" data-price="${item.price}" class="peer absolute opacity-0 w-0 h-0">
                     
@@ -643,7 +628,6 @@
             
             updateTotal();
             
-            // 🍓 加碼貼心細節：點選完主題卡片後，自動幫畫面平滑向下滾動一點點，帶引買家去看下方剛生出來的商品說明與清單
             setTimeout(() => {
                 infoSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }, 150);
@@ -678,7 +662,8 @@
 
             if (checkedBoxes.length === 0) { alert("⚠️ 請問要購買什麼呢？請至少選取一樣商品喔！"); return; }
             if (buyerName === "") { alert("⚠️ 為了方便核對，請填寫您的暱稱唷！"); return; }
-            if (buyerEmail === "" || !buyerEmail.includes('@')) { alert("⚠️ 請填寫正確的電子信箱，檔案才寄得過去唷！"); return; }
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (buyerEmail === "" || !emailPattern.test(buyerEmail)) { alert("⚠️ 請填寫正確的電子信箱格式（例如：abc@gmail.com），檔案才寄得過去唷！"); return; }
 
             summaryReview.innerHTML = "";
             checkedBoxes.forEach(cb => {
